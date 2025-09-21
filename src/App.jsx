@@ -1,0 +1,40 @@
+
+
+import { useState, useEffect, useRef } from "react";
+
+function App() {
+
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+  const [aiReady, setAiReady] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+
+
+  useEffect(() => {
+    const checkReady = setInterval(() => {
+
+      if (
+        window.puter &&
+        window.puter.ai &&
+        typeof window.puter.ai.chat === "function"
+      ) {
+        setAiReady(true);
+        clearInterval(checkReady);
+      }
+
+    }, 300);
+    return () => clearInterval(checkReady);
+  }, []);
+
+  return (
+    <div
+      className="min-h-screen bg-gradient-to-br form-sky-900 via-slate-950 to-emerald-900 flex flex-col items-center justify-center p-4 gap-8">
+      <h1
+        className="text-6xl sm:text-7xl font-light bg-gradient-to-r from-emerald-400 via-sky-300 to-blue-500 bg-clip-text text-transparent text-center h-20">AI Chat App</h1>
+    </div>
+  );
+}
+
+export default App;
